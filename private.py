@@ -1,5 +1,8 @@
 uri = "mongodb://127.0.0.1:27017"
 
+account_sid = 'AC9b06263998778b4bcd9037ea11c25182'
+auth_token = 'dc9c68a44b918e6dd5ee27921c33d688'
+
 #uri = "mongodb+srv://faiq_jay:Jayswaggs02@jaymongo.tblxq.mongodb.net/testworkshop?retryWrites=true&w=majority"
 
 db_name = "test_falldetector"
