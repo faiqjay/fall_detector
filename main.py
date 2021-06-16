@@ -139,7 +139,7 @@ async def register_fall_get(device_id: str, time: str, date: str, latitude: str,
 
     message = client.messages.create(
         messaging_service_sid='MG2b502309ae0dfa1c768a55dcb0d0d170',
-        body="EMERGENCY ALERT FOR "+patient["name"]+"https://www.google.com/maps/?q="+latitude+","+longitude+" "+Date.date(),
+        body="EMERGENCY ALERT FOR "+patient["name"]+" https://www.google.com/maps/?q="+latitude+","+longitude+" "+Date.date(),
         to=patient["emergency_contact"]
     )
 
