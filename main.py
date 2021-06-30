@@ -1,5 +1,5 @@
 import uuid
-
+import requests
 from twilio.rest import Client
 
 import private
@@ -126,24 +126,30 @@ async def register_fall(fall: Fall):
 
 @app.get('/fall/{device_id}/{time}/{date}/{latitude}/{longitude}/{status}')
 async def register_fall_get(device_id: str, time: str, date: str, latitude: str, longitude: str, status: str):
+
+    date = Date.date()
     _id = uuid.uuid4().hex
     Database.insert("fall", {"_id": _id, "device_id": device_id, "time": time, "date": date, "latitude": latitude,
                              "longitude": longitude, "status": status})
     #patient = Database.find_one("patient", {"device_id": device_id})
+    response = requests.get("https://e-monitoring.herokuapp.com/users/devices/"+device_id)
+    data_full = response.json()
+    print(response.json())
+    patient = data_full[0]
 
-    patient = {"name": "Juwon", "emergency_contact": "+2348162937944"}
+    #patient = {"name": "Juwon", "emergency_contact_1": "+2348162937944", "emergency_contact_2": "+2348162937944"}
 
     account_sid = private.account_sid
     auth_token = private.auth_token
     client = Client(account_sid, auth_token)
 
-    message = client.messages.create(
+    message1 = client.messages.create(
         messaging_service_sid='MG2b502309ae0dfa1c768a55dcb0d0d170',
-        body="EMERGENCY ALERT FOR "+patient["name"]+" https://www.google.com/maps/?q="+latitude+","+longitude+" "+Date.date(),
-        to=patient["emergency_contact"]
+        body="EMERGENCY ALERT FOR "+patient["username"]+" https://www.google.com/maps/?q="+latitude+","+longitude+" "+date,
+        to=patient["emergency_contact_1"]
     )
 
-    print(message.sid)
+    print(message1.sid)
     return "success"
 
 
