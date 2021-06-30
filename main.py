@@ -63,7 +63,7 @@ Database.initialize()
 
 
 
-
+'''
 @app.get('/patients')
 async def show_patients():
     # return db
@@ -93,7 +93,7 @@ async def register_patient(patient: Patitient):
     # db.append(new_pizza)
     Database.insert("patient", new_patient)
     return new_patient
-
+'''
 
 @app.get('/fall')
 async def show_falls():
@@ -105,6 +105,16 @@ async def show_falls():
     return list_falls
 
 
+@app.get('/fall_device/{device_id}')
+async def show_falls_device(device_id: str):
+    # return db
+    list_falls = []
+    falls = Database.find("fall", {"device_id":device_id})
+    for i in falls:
+        list_falls.append(i)
+    return list_falls
+
+'''
 @app.post('/fall')
 async def register_fall(fall: Fall):
     new_fall = fall.dict()
@@ -122,7 +132,7 @@ async def register_fall(fall: Fall):
 #    # db.append(new_pizza)
 #    Database.insert("fall", new_fall)
 #    return new_fall
-
+'''
 
 @app.get('/fall/{device_id}/{time}/{date}/{latitude}/{longitude}/{status}')
 async def register_fall_get(device_id: str, time: str, date: str, latitude: str, longitude: str, status: str):
@@ -152,7 +162,7 @@ async def register_fall_get(device_id: str, time: str, date: str, latitude: str,
     print(message1.sid)
     return "success"
 
-
+'''
 @app.get('/panic')
 async def show_panics():
     # return db
@@ -179,3 +189,4 @@ async def register_panic_get(device_id: str, time: str, date: str, latitude: str
     Database.insert("panic", {"_id": _id, "device_id": device_id, "time": time, "date": date, "latitude": latitude,
                              "longitude": longitude, "status": status})
     return "success"
+    '''
