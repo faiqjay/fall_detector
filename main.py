@@ -1,6 +1,7 @@
 import uuid
 import requests
 from twilio.rest import Client
+from fastapi.middleware.cors import CORSMiddleware
 
 import private
 
@@ -56,8 +57,19 @@ class Panic(BaseModel):
     longitude: str
     status: str
 
-
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 
 Database.initialize()
 
