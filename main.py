@@ -154,6 +154,11 @@ async def register_fall_get(device_id: str, time: str, date: str, latitude: str,
     Database.insert("fall", {"_id": _id, "device_id": device_id, "time": time, "date": date, "latitude": latitude,
                              "longitude": longitude, "status": status})
     #patient = Database.find_one("patient", {"device_id": device_id})
+    response_1 = requests.post('https://e-monitoring.herokuapp.com/devices',
+                             json={"device_id": device_id, "time": time, "date": date, "latitude": latitude,
+                                   "longitude": longitude, "status": status
+                                   })
+    print("Status code: ", response_1.status_code)
     response = requests.get("https://e-monitoring.herokuapp.com/users/devices/"+device_id)
     data_full = response.json()
     print(response.json())
